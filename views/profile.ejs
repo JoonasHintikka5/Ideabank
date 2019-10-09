@@ -1,0 +1,57 @@
+<!-- views/profile.ejs -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ideabank</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- load fontawesome -->
+  </head>
+  <body>  
+    <div class="container">
+	
+		<p>
+		<div class="jumbotron text-center">
+        <h1><span class="fa fa-bank"></span> Ideabank</h1>
+		</div>
+		
+        <form action="/profile" method="post" enctype="multipart/form-data">
+		
+			<div class="form-group">
+			  <label for="idea">Idea:</label>
+			  <textarea class="form-control" rows="5" name="datasaved" id="idea" placeholder="Enter an idea" required></textarea>
+			</div>
+			<p>
+			<input type="file" name="images" multiple>
+			<p>
+			<input type="submit" class="btn btn-default btn-sm" value="Save idea">
+        </form>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+	
+	<div class="container">
+		<h1><%= title %></h1>
+		<% for(var i=0; i < ideas.length; i++) { %>
+			<form action="/profile" method="post">
+			<li <h3 name="idea" + i href='ideas/<%= ideas[i] %>'>
+			<%= ideas[i].name + ": " + ideas[i].idea + ": " + ideas[i].date.toDateString()%>
+			<% if (ideas[i].filename !== undefined) { %>
+			<img src="/images/<%=ideas[i].filename %>" height=60 width=60/>
+			<% } else{ %>
+				<p>no images uploaded</p>
+			<% } %>
+			<input type="hidden" name="_id" value=<%= ideas[i]._id %> readonly><br>
+			<input type="submit" class="btn btn-default btn-sm" value="Delete idea">
+			</li>
+			</form>
+			<form action="/edit" method="get">
+				<input type="hidden" name="_id" value=<%= ideas[i]._id %> readonly><br>
+				<input type="submit" class="btn btn-default btn-sm" value="Edit idea">
+			</form>
+		<% } %>
+	</div>
+	<p>
+	
+  </body>
+</html>
